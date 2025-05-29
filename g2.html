@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI株価分析</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="a.css">
+</head>
+<body>
+    <div class="star-background" id="stars"></div>
+    <div class="grid-overlay"></div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="title" id="pageTitle"></h1>
+            <h2 class="subtitle" id="pageSubtitle"></h2>
+            <p class="description" id="pageDescription"></p>
+        </header>
+
+        <main class="main-content">
+            <!-- 入力フォームを画像の上に配置 -->
+            <div class="form-container">
+                <h3 class="form-title" id="formTitle"></h3>
+                <div class="input-group">
+                    <input type="text" class="input-field" id="stockCode" />
+                </div>
+                <button class="submit-btn" id="analyzeBtn"></button>
+            </div>
+
+            <div class="image-container">
+                <img src="img/12.jpg" alt="" onerror="this.onerror=null;this.src='https://pfst.cf2.poecdn.net/base/image/13a6def37dcc68d70333dd2f157e23a6b479746917135d7c78b3e7e1583c314e?w=968&h=816';">
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="disclaimer">
+                <p class="disclaimer-title" id="disclaimerTitle"></p>
+                <p id="disclaimerText1"></p>
+                <p id="disclaimerText2"></p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Progress Modal -->
+    <div class="modal-overlay" id="progressModal">
+        <div class="modal-container">
+            <div class="close-modal" id="closeProgressModal"></div>
+            <h3 class="progress-modal-title" id="progressTitle"></h3>
+            
+            <div class="circle-progress-container">
+                <div class="circle-progress-background"></div>
+                <div class="circle-progress" id="circleProgress"></div>
+                <div class="circle-progress-inner">
+                    <span id="progressPercent">0%</span>
+                </div>
+            </div>
+            
+            <div class="progress-items">
+                <div class="progress-item">
+                    <div class="progress-indicator" id="marketIndicator"></div>
+                    <div class="progress-text" id="marketText"></div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-indicator" id="newsIndicator"></div>
+                    <div class="progress-text" id="newsText"></div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-indicator" id="historyIndicator"></div>
+                    <div class="progress-text" id="historyText"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div class="modal-overlay" id="resultModal">
+        <div class="modal-container">
+            <div class="close-modal" id="closeResultModal"></div>
+            <h3 class="result-modal-title" id="resultTitle"></h3>
+            <p class="result-message" id="resultMessage"></p>
+            <button class="result-action" id="resultButton" onclick="opensite()"></button>
+        </div>
+    </div>
+
+    <script src="b.js"></script>
+</body>
+</html>

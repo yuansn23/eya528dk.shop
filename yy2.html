@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Global Travel Adventures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #ff7b00 0%, #ff5500 100%);
+            padding: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.jacmsotck.online/3.jpg') center/cover no-repeat;
+            opacity: 0.4;
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #ff7b00, #ffcc00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 123, 0, 0.3);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ff7b00;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff5500, #ff9900);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 85, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 85, 0, 0.6);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        section {
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(255, 123, 0, 0.2);
+        }
+        
+        .feature-box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 30px 0;
+            gap: 20px;
+        }
+        
+        .feature-card {
+            flex: 1 1 300px;
+            background: rgba(30, 30, 30, 0.8);
+            padding: 25px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            border-left: 3px solid #ff7b00;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 123, 0, 0.2);
+        }
+        
+        .feature-card h3 {
+            color: #ff9900;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .testimonials {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 30px 0;
+            gap: 20px;
+        }
+        
+        .testimonial {
+            flex: 1 1 300px;
+            background: rgba(40, 40, 40, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            font-style: italic;
+        }
+        
+        .testimonial p {
+            margin-bottom: 10px;
+        }
+        
+        .testimonial-author {
+            color: #ff7b00;
+            font-weight: bold;
+            font-style: normal;
+        }
+        
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #ff3300, #ff9900);
+            color: #fff;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(255, 85, 0, 0.6);
+            white-space: nowrap;
+            animation: pulse 2s infinite;
+            z-index: 1000;
+            border: none;
+            cursor: pointer;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: translateX(-50%) scale(1);
+                box-shadow: 0 0 20px rgba(255, 85, 0, 0.6);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.05);
+                box-shadow: 0 0 30px rgba(255, 85, 0, 0.8);
+            }
+            100% {
+                transform: translateX(-50%) scale(1);
+                box-shadow: 0 0 20px rgba(255, 85, 0, 0.6);
+            }
+        }
+        
+        footer {
+            background-color: #000;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 30px 0;
+            }
+            
+            .feature-box, .testimonials {
+                gap: 15px;
+            }
+            
+            .feature-card, .testimonial {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="hero">
+                <h1>Explore Infinite Possibilities</h1>
+                <h2>Global Travel, At Your Fingertips</h2>
+                <p class="subtitle">Your ultimate travel guide. Want to escape the routine? Whether you're a backpacker or luxury traveler, we provide comprehensive travel guides to help you explore the beauty of the world.</p>
+                <button class="btn" onclick="ott()">Join Now</button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section>
+            <h2>Featured Travel Destinations</h2>
+            <div class="feature-box">
+                <div class="feature-card">
+                    <h3>European Dream Tour</h3>
+                    <p>Visit historic cities, savor local cuisine, and immerse yourself in cultural richness.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Asian Adventure</h3>
+                    <p>From bustling cities to tranquil villages, experience diverse cultures and natural beauty.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>American Expedition</h3>
+                    <p>Explore magnificent natural wonders and experience warm local hospitality.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn" onclick="ott()">Join Now</button>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Customized Itineraries</h2>
+            <p style="margin-bottom: 20px;">No more fixed routes. Our expert team creates personalized itineraries to ensure every trip is full of surprises.</p>
+            <div style="text-align: center;">
+                <button class="btn" onclick="ott()">Join Now</button>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Practical Travel Guides</h2>
+            <div class="feature-box">
+                <div class="feature-card">
+                    <h3>Visa Guide</h3>
+                    <p>Simplify visa application processes for various countries.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Safety Tips</h3>
+                    <p>Learn essential travel safety knowledge for worry-free journeys.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Budget Planning</h3>
+                    <p>Discover how to save money while enjoying your travels to the fullest.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Start Your Adventure</h2>
+            <p style="margin-bottom: 20px;">Register now to get exclusive travel tips and the latest destination recommendations, and begin your global journey.</p>
+            <div style="text-align: center;">
+                <button class="btn" onclick="ott()">Join Now</button>
+            </div>
+        </section>
+        
+        <section>
+            <h2>What Our Travelers Say</h2>
+            <div class="testimonials">
+                <div class="testimonial">
+                    <p>"The itinerary was perfectly tailored to my interests. I had an amazing time!"</p>
+                    <p class="testimonial-author">- Sarah J.</p>
+                </div>
+                <div class="testimonial">
+                    <p>"The safety tips were invaluable for my solo trip. Felt secure the whole time."</p>
+                    <p class="testimonial-author">- Michael T.</p>
+                </div>
+                <div class="testimonial">
+                    <p>"Saved so much money with their budget planning advice. Highly recommended!"</p>
+                    <p class="testimonial-author">- Emily R.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <button class="floating-btn" onclick="ott()">Start Your Adventure Now - Limited Time Offer!</button>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Global Travel Adventures. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        function ott() {
+            window.location.href = "https://line.me/";
+        }
+    </script>
+</body>
+</html>

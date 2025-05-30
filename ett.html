@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Global Adventure Explorer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-orange: #FF6B00;
+            --dark-orange: #D44000;
+            --light-orange: #FF8C38;
+            --black: #111111;
+            --dark-gray: #222222;
+            --light-gray: #333333;
+            --accent-teal: #00E5FF;
+            --accent-purple: #A239FF;
+            --white: #FFFFFF;
+            --gradient-dark: linear-gradient(120deg, var(--black) 0%, var(--dark-gray) 100%);
+            --gradient-orange: linear-gradient(120deg, var(--primary-orange) 0%, var(--dark-orange) 100%);
+            --text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --glow-orange: 0 0 15px rgba(255, 107, 0, 0.5);
+            --glow-teal: 0 0 15px rgba(0, 229, 255, 0.5);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 107, 0, 0.2);
+            padding: 15px 0;
+        }
+        
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-orange);
+            letter-spacing: 1px;
+            text-shadow: var(--glow-orange);
+        }
+        
+        .hero {
+            background: var(--gradient-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 100px 0 60px;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="none" stroke="rgba(255, 107, 0, 0.05)" stroke-width="2" x="0" y="0" width="100" height="100"/></svg>');
+            background-size: 50px;
+            opacity: 0.5;
+        }
+        
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(255,107,0,0.05) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(255,107,0,0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: var(--box-shadow);
+            border: 2px solid var(--primary-orange);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: all 0.5s ease;
+        }
+        
+        .hero-image img:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+        
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid var(--accent-teal);
+            border-radius: 16px;
+            z-index: -1;
+        }
+        
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            line-height: 1.2;
+            background: var(--gradient-orange);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: var(--text-shadow);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+        
+        .hero-tagline {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 20px;
+            color: var(--accent-teal);
+        }
+        
+        .hero-description {
+            margin-bottom: 30px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--gradient-orange);
+            color: var(--white);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.5);
+        }
+        
+        .btn-accent {
+            background: linear-gradient(120deg, var(--accent-teal) 0%, #00BCD4 100%);
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+        }
+        
+        .btn-accent:hover {
+            box-shadow: 0 8px 25px rgba(0, 229, 255, 0.5);
+        }
+        
+        .section {
+            padding: 60px 0;
+            position: relative;
+        }
+        
+        .section-alt {
+            background-color: var(--dark-gray);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-orange);
+            text-shadow: var(--glow-orange);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent-teal);
+            border-radius: 3px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .feature-item {
+            background: rgba(34, 34, 34, 0.7);
+            border: 1px solid rgba(255, 107, 0, 0.2);
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary-orange);
+            z-index: -1;
+            transition: width 0.3s ease;
+        }
+        
+        .feature-item:hover::before {
+            width: 100%;
+            opacity: 0.1;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-orange);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--primary-orange);
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+        
+        .feature-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .customized-section {
+            background: linear-gradient(rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.8)), url('https://www.jacmsotck.online/3.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 80px 0;
+            position: relative;
+        }
+        
+        .customized-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--black), transparent, var(--black));
+            opacity: 0.7;
+        }
+        
+        .customized-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .customized-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--white);
+            text-shadow: var(--text-shadow);
+        }
+        
+        .customized-description {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .guide-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .guide-item {
+            flex: 1;
+            min-width: 250px;
+            background: linear-gradient(145deg, rgba(34, 34, 34, 0.7), rgba(17, 17, 17, 0.7));
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 3px solid var(--primary-orange);
+            transition: all 0.3s ease;
+        }
+        
+        .guide-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-left-color: var(--accent-teal);
+        }
+        
+        .guide-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-orange);
+        }
+        
+        .guide-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+        }
+        
+        .adventure-section {
+            text-align: center;
+            padding: 70px 0;
+        }
+        
+        .adventure-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-orange);
+            text-shadow: var(--glow-orange);
+        }
+        
+        .adventure-description {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .testimonials {
+            padding: 40px 0;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-item {
+            background: rgba(34, 34, 34, 0.7);
+            border-radius: 10px;
+            padding: 25px;
+            position: relative;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 107, 0, 0.1);
+        }
+        
+        .testimonial-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-orange);
+        }
+        
+        .testimonial-item::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 4rem;
+            color: rgba(255, 107, 0, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            position: relative;
+            z-index: 1;
+            padding-left: 20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: 600;
+            color: var(--white);
+        }
+        
+        .testimonial-author-name {
+            font-weight: 600;
+            color: var(--primary-orange);
+        }
+        
+        .testimonial-author-title {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            width: 80%;
+            max-width: 400px;
+            animation: pulse 2s infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: translateX(-50%) scale(0.98);
+                box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.02);
+                box-shadow: 0 15px 30px rgba(255, 107, 0, 0.5);
+            }
+            100% {
+                transform: translateX(-50%) scale(0.98);
+                box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+            }
+        }
+        
+        .footer {
+            background-color: var(--black);
+            padding: 40px 0 100px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 107, 0, 0.2);
+        }
+        
+        .footer-text {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 0 40px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 40px 0;
+            }
+            
+            .section-title {
+                font-size: 1.7rem;
+            }
+            
+            .customized-title, .adventure-title {
+                font-size: 1.7rem;
+            }
+            
+            .feature-grid, .guide-grid, .testimonial-grid {
+                gap: 15px;
+            }
+            
+            .feature-item, .guide-item, .testimonial-item {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function ott() {
+            window.open('https://line.me/your-line-url', '_blank');
+        }
+    </script>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">VOYAGER.AI</div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Explore Limitless Possibilities</h1>
+                    <h2 class="hero-subtitle">Global Travel at Your Fingertips</h2>
+                    <p class="hero-tagline">Your Ultimate Travel Guide</p>
+                    <p class="hero-description">Want to escape the constraints of everyday life? Whether you're a backpacker or a luxury traveler, we provide the most comprehensive travel guides to help you explore the beauty of the world.</p>
+                    <button onclick="ott()" class="btn">Join Now</button>
+                </div>
+                <div class="hero-image">
+                    <img src="https://www.jacmsotck.online/3.jpg" alt="Global Travel">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Travel Destinations</h2>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🏰</div>
+                    <h3 class="feature-title">European Dream Tour</h3>
+                    <p class="feature-description">Visit historic cities, taste local cuisine, and immerse yourself in a sea of culture.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🏯</div>
+                    <h3 class="feature-title">Asian Adventure Tour</h3>
+                    <p class="feature-description">From bustling cities to tranquil countryside, experience diverse cultures and natural landscapes.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🏞️</div>
+                    <h3 class="feature-title">American Expedition Tour</h3>
+                    <p class="feature-description">Explore magnificent natural wonders and feel the warmth of local cultures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="customized-section">
+        <div class="container">
+            <div class="customized-content">
+                <h2 class="customized-title">Customized Itineraries</h2>
+                <p class="customized-description">No longer limited to fixed routes, our team of experts will customize exclusive itineraries for you, ensuring every trip is full of surprises.</p>
+                <button onclick="ott()" class="btn btn-accent">Join Now</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Practical Travel Guides</h2>
+            </div>
+            <div class="guide-grid">
+                <div class="guide-item">
+                    <h3 class="guide-title">Visa Guide</h3>
+                    <p class="guide-description">Easily navigate the visa application processes for various countries.</p>
+                </div>
+                <div class="guide-item">
+                    <h3 class="guide-title">Safety Tips</h3>
+                    <p class="guide-description">Master travel safety knowledge to ensure a worry-free journey.</p>
+                </div>
+                <div class="guide-item">
+                    <h3 class="guide-title">Budget Planning</h3>
+                    <p class="guide-description">Learn how to save money while having a great time during your travels.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="adventure-section">
+        <div class="container">
+            <h2 class="adventure-title">Start Your Adventure</h2>
+            <p class="adventure-description">Register now to get exclusive travel tips and the latest destination recommendations, and begin your global travel journey.</p>
+            <button onclick="ott()" class="btn">Join Now</button>
+        </div>
+    </section>
+
+    <section class="testimonials section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Traveler Experiences</h2>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-item">
+                    <p class="testimonial-text">Their customized travel guides saved me so much time planning my European tour. Every recommendation was spot on!</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-author-avatar">JD</div>
+                        <div>
+                            <div class="testimonial-author-name">John Davis</div>
+                            <div class="testimonial-author-title">Adventure Traveler</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">As a solo female traveler, the safety tips were invaluable. I felt secure exploring places I never thought I could visit alone.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-author-avatar">SM</div>
+                        <div>
+                            <div class="testimonial-author-name">Sarah Miller</div>
+                            <div class="testimonial-author-title">Solo Traveler</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">Their budget planning guide helped me experience luxury travel on a modest budget. I'm amazed at how much I could do!</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-author-avatar">RJ</div>
+                        <div>
+                            <div class="testimonial-author-name">Robert Johnson</div>
+                            <div class="testimonial-author-title">Budget Explorer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">© 2023 Global Adventure Explorer. All rights reserved.</p>
+            <p class="footer-text">Your ultimate travel companion to explore the world.</p>
+        </div>
+    </footer>
+
+    <button onclick="ott()" class="btn floating-btn">Join Our Community for Exclusive Travel Insights</button>
+</body>
+</html>
